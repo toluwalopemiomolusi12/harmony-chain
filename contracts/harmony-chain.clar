@@ -50,3 +50,19 @@
     (ok composition-id)
   )
 )
+
+;; Invite a collaborator
+(define-public (invite-collaborator (composition-id uint) (collaborator principal) (share-percentage uint))
+  (let
+    (
+      (composition (unwrap! (map-get? compositions { composition-id: composition-id }) (err u404)))
+    )
+    (asserts! (is-eq tx-sender (get owner composition)) err-not-token-owner)
+    (asserts! (<= share-percentage (get royalty-percentage composition)) err-invalid-collaboration)
+    (map-set collaborations
+      { composition-id: composition-id, collaborator: collaborator }
+      { accepted: false, share-percentage: share-percentage }
+    )
+    (ok true)
+  )
+)
