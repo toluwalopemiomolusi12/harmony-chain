@@ -86,3 +86,8 @@
     (ok true)
   )
 )
+
+;; Get composition details
+(define-read-only (get-composition (composition-id uint))
+  (map-get? compositions { composition-id: composition-id })
+)
