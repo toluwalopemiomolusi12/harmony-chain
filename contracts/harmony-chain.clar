@@ -27,7 +27,7 @@
 )
 
 ;; Define NFT token
-(define-non-fungible-token composition uint)
+(define-non-fungible-token composition-token uint)
 
 ;; Create a new composition
 (define-public (create-composition (title (string-ascii 50)) (ipfs-hash (string-ascii 46)) (royalty-percentage uint))
@@ -35,7 +35,7 @@
     (
       (composition-id (var-get next-composition-id))
     )
-    (try! (nft-mint? composition composition-id tx-sender))
+    (try! (nft-mint? composition-token composition-id tx-sender))
     (map-set compositions
       { composition-id: composition-id }
       {
@@ -96,3 +96,4 @@
 (define-read-only (get-collaboration (composition-id uint) (collaborator principal))
   (map-get? collaborations { composition-id: composition-id, collaborator: collaborator })
 )
+
