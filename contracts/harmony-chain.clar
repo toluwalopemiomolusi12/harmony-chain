@@ -66,3 +66,23 @@
     (ok true)
   )
 )
+
+;; Accept collaboration invitation
+(define-public (accept-collaboration (composition-id uint))
+  (let
+    (
+      (collaboration (unwrap! (map-get? collaborations { composition-id: composition-id, collaborator: tx-sender }) (err u404)))
+      (composition (unwrap! (map-get? compositions { composition-id: composition-id }) (err u404)))
+    )
+    (asserts! (not (get accepted collaboration)) err-invalid-collaboration)
+    (map-set collaborations
+      { composition-id: composition-id, collaborator: tx-sender }
+      (merge collaboration { accepted: true })
+    )
+    (map-set compositions
+      { composition-id: composition-id }
+      (merge composition { collaborators: (unwrap! (as-max-len? (append (get collaborators composition) tx-sender) u5) err-invalid-collaboration) })
+    )
+    (ok true)
+  )
+)
