@@ -91,3 +91,8 @@
 (define-read-only (get-composition (composition-id uint))
   (map-get? compositions { composition-id: composition-id })
 )
+
+;; Get collaboration details
+(define-read-only (get-collaboration (composition-id uint) (collaborator principal))
+  (map-get? collaborations { composition-id: composition-id, collaborator: collaborator })
+)
