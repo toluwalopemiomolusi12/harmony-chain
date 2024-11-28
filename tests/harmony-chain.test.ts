@@ -11,7 +11,7 @@ const bool = (value: boolean) => mockClarityValue('bool', value);
 // Mock data variables
 let compositions = new Map();
 let collaborations = new Map();
-let blockHeight = 2;
+let blockHeight = 2; 
 
 // Mock contract calls
 const contractCall = (method: string, args: any[], sender: string) => {
